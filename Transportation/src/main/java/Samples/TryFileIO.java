@@ -2,6 +2,7 @@ package Samples;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -35,10 +36,29 @@ public class TryFileIO {
             e.printStackTrace();
         }
 
+        try (FileReader fr = new FileReader(path)) {
+            int c;
+            StringBuilder content = new StringBuilder();
+
+            while ((c = fr.read()) != -1) {
+                content.append((char)c);
+            }
+
+            String str = content.toString();
+            System.out.println("Read into string by I/O:\n" + str);
+
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found! Path: " + path);
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("An I/O exception");
+            e.printStackTrace();
+        }
+
         try {
             String fileContent = new String (Files.readAllBytes(Paths.get(path)));
 
-            System.out.println("Read into string:\n" + fileContent);
+            System.out.println("Read into string by NIO:\n" + fileContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
