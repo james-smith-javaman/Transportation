@@ -11,6 +11,21 @@ import java.nio.file.Paths;
  * Created by tarasmotyl on 6/17/16.
  */
 public class TryFileIO {
+
+    public static String getFileContent(String path) {
+        String fileContent = null;
+
+        try {
+            fileContent = new String (Files.readAllBytes(Paths.get(path)));
+            System.out.println("Read file content into string:\n" + fileContent);
+        } catch (IOException e) {
+            System.err.println("An I/O exception");
+            e.printStackTrace();
+        }
+
+        return fileContent;
+    }
+
     public static void main(String[] args) {
         int i;
 
