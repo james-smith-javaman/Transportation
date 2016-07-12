@@ -8,7 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * Created by tarasmotyl on 6/17/16.
+ * This class is designed for testing different approaches
+ * to deal with I/O system.
+ *
+ * Created by james.smith on 6/17/16.
  */
 public class TryFileIO {
 
