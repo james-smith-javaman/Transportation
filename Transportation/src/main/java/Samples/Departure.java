@@ -3,6 +3,7 @@ package Samples;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.TextStyle;
+import java.util.HashSet;
 import java.util.Locale;
 
 /**
@@ -33,7 +34,6 @@ public class Departure {
      */
     public Departure (int year, Month month, int dayOfMonth, int hour, int minute) {
         dateTime = LocalDateTime.of(year, month, dayOfMonth, hour, minute);
-
     }
 
     /**
@@ -110,6 +110,24 @@ public class Departure {
         return dateTime.getMinute();
     }
 
+
+    /**
+     * Returns LocalDateTime.
+     *
+     * @return - Type: LocalDateTime.
+     */
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    /**
+     * Sets LocalDateTime.
+     * @param dateTime - Type: LocalDateTime.
+     */
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
     public static void main(String[] args) {
 
         Departure departure1 = new Departure(1963, Month.NOVEMBER, 22, 12, 30);
@@ -131,6 +149,16 @@ public class Departure {
         System.out.println("Year: " + departure2.getYear());
         System.out.println("Hour: " + departure2.getHour());
         System.out.println("Minute: " + departure2.getMinute());
+
+        HashSet<Departure> departureHashSet = new HashSet<>();
+
+        departureHashSet.add(departure1);
+        departureHashSet.add(departure2);
+
+        System.out.println("Printing from HashSet and via enhanced for loop:");
+        for (Departure dep: departureHashSet) {
+            System.out.println(dep);
+        }
     }
 
 }
