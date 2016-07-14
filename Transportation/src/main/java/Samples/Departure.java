@@ -42,7 +42,7 @@ public class Departure {
      */
     @Override
     public String toString() {
-        return "Date: " + dateTime.getMonthValue() + "/" + dateTime.getDayOfMonth() + "/" +
+        return "\nDate: " + dateTime.getMonthValue() + "/" + dateTime.getDayOfMonth() + "/" +
                 dateTime.getYear() + "\nTime: " + dateTime.getHour() + ":" + dateTime.getMinute();
     }
 
