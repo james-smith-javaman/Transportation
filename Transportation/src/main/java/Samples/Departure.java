@@ -9,7 +9,6 @@ import java.util.Locale;
 /**
  * This class is designed for holding departure's
  * date and time values for a specific currier.
- *
  * Created by james.smith on 7/12/16.
  */
 public class Departure {
@@ -25,7 +24,6 @@ public class Departure {
 
     /**
      * Creates a new instance of the LocalDateTime class with specified parameters.
-     *
      * @param year - year;
      * @param month - month (Month enum);
      * @param dayOfMonth - day of month;
@@ -38,7 +36,6 @@ public class Departure {
 
     /**
      * Overrides Object.toString() method.
-     *
      * @return - Type: String. Format:
      *              Date: mm/dd/yyyy
      *              Time: hh:mm
@@ -51,7 +48,6 @@ public class Departure {
 
     /**
      * Returns name of the day.
-     *
      * @return - Type: String. Representation of the day name.
      */
     public String getDay() {
@@ -60,7 +56,6 @@ public class Departure {
 
     /**
      * Returns day of month.
-     *
      * @return - Type: int. Value of day in month.
      */
     public int getDayOfMonth() {
@@ -69,7 +64,6 @@ public class Departure {
 
     /**
      * Returns month.
-     *
      * @return - Type: Month. Month.
      */
     public Month getMonth() {
@@ -94,7 +88,6 @@ public class Departure {
 
     /**
      * Returns hour.
-     *
      * @return - Type: int. Hour.
      */
     public int getHour() {
@@ -103,7 +96,6 @@ public class Departure {
 
     /**
      * Returns minute.
-     *
      * @return - Type: int. Minute.
      */
     public int getMinute() {
@@ -113,7 +105,6 @@ public class Departure {
 
     /**
      * Returns LocalDateTime.
-     *
      * @return - Type: LocalDateTime.
      */
     public LocalDateTime getDateTime() {

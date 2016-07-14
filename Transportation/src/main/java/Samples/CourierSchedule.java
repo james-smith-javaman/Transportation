@@ -5,27 +5,43 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 
 /**
  * This class is designed for storing information about courier and his schedule.
- *
- * Created by tarasmotyl on 7/13/16.
+ * Created by james.smith on 7/13/16.
  */
 public class CourierSchedule {
 
     String courierName;
+
+    /**
+     * Schedule is a set of Departure objects.
+     */
     HashSet<Departure> schedule;
 
+    /**
+     * Default constructor.
+     */
     public CourierSchedule() {
         courierName = null;
         schedule = new HashSet<>();
     }
 
+    /**
+     * Creates an object with the specified name and allocates memory for the schedule.
+     * @param courierName - Type: String. Name of the courier.
+     */
     public CourierSchedule(String courierName) {
         this.courierName = courierName;
         schedule = new HashSet<>();
     }
 
+    /**
+     * Creates an object with the specified name and specified schedule.
+     * @param courierName - Type: String. Name of the courier.
+     * @param schedule - Type: HashSet<Departure>. Schedule of the courier.
+     */
     public CourierSchedule(String courierName, HashSet<Departure> schedule) {
         this.courierName = courierName;
         this.schedule = schedule;
@@ -49,7 +65,6 @@ public class CourierSchedule {
 
     /**
      * Returns name of the courier.
-     *
      * @return - Type: String. Name of the courier.
      */
     public String getCourierName() {
@@ -58,7 +73,6 @@ public class CourierSchedule {
 
     /**
      * Returns schedule of the courier.
-     *
      * @return - Type: HashSet<Departure>. Schedule of the courier.
      */
     public HashSet<Departure> getSchedule() {
@@ -67,7 +81,6 @@ public class CourierSchedule {
 
     /**
      * Sets name of the courier.
-     *
      * @param courierName - Type: String.
      */
     public void setCourierName(String courierName) {
@@ -76,7 +89,6 @@ public class CourierSchedule {
 
     /**
      * Sets schedule of the courier.
-     *
      * @param schedule - Type: HashSet<Departure>.
      */
     public void setSchedule(HashSet<Departure> schedule) {
@@ -85,7 +97,6 @@ public class CourierSchedule {
 
     /**
      * Overrides Object.toString() method.
-     *
      * @return - Type: String. Format:
      *              Name: courierName
      *              Date: mm/dd/yyyy
@@ -102,7 +113,6 @@ public class CourierSchedule {
 
     /**
      * Adds departure to the courier's schedule.
-     *
      * @param departure - Type: Departure.
      */
     public void addDeparture(Departure departure) {
@@ -118,7 +128,69 @@ public class CourierSchedule {
         return schedule.remove(dep);
     }
 
+    /**
+     * Generates random int number in the range between 'min' and 'max'.
+     * @param min - lower range.
+     * @param max - higher range.
+     * @return - Type: int. Random int value in the range between 'min' and 'max'.
+     * @throws IllegalArgumentException if 'min' is equals or bigger then 'max'.
+     */
+    public int randomInt(int min, int max) throws IllegalArgumentException {
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random rand = new Random();
+
+        return rand.nextInt((max - min) + 1) + min;
+    }
+
+    /**
+     * Generates schedule set of the specified size with random Departure objects in it.
+     * @param size - Type: int. Size of the schedule set.
+     * @param minYear - Type: int. Minimum range of the year to generate.
+     * @param maxYear - Type: int. Maximum range of the year to generate.
+     * @param minMonth - Type: int. Minimum range of the month to generate.
+     * @param maxMonth - Type: int. Maximum range of the month to generate.
+     * @param minDay - Type: int. Minimum range of the day to generate.
+     * @param maxDay - Type: int. Maximum range of the day to generate.
+     * @param minHour - Type: int. Minimum range of the hour to generate.
+     * @param maxHour - Type: int. Maximum range of the hour to generate.
+     * @param minMinute - Type: int. Minimum range of the minute to generate.
+     * @param maxMinute - Type: int. Maximum range of the minute to generate.
+     */
+    public void generateRandomSchedule(int size, int minYear, int maxYear, int minMonth, int maxMonth,
+                                       int minDay, int maxDay, int minHour, int maxHour, int minMinute, int maxMinute) {
+        HashSet<Departure> randSchedule = new HashSet<>();
+        int randYear = 0;
+        int randMonthValue;
+        Month randMonth = null;
+        int randDay = 0;
+        int randHour = 0;
+        int randMinute = 0;
+
+        for (int i = 0; i != size; ++i) {
+            try {
+                randYear = randomInt(minYear, maxYear);
+                randMonthValue = randomInt(minMonth, maxMonth);
+                randMonth = Month.of(randMonthValue);
+                randDay = randomInt(minDay, maxDay);
+                randHour = randomInt(minHour, maxHour);
+                randMinute = randomInt(minMinute, maxMinute);
+            } catch (IllegalArgumentException e) {
+                System.err.println("Wrong ranges during generating random schedule.");
+                e.printStackTrace();
+            }
+
+            randSchedule.add(new Departure(randYear, randMonth, randDay, randHour, randMinute));
+        }
+
+        setCourierName("Default_name");
+        setSchedule(randSchedule);
+    }
+
     public static void main(String[] args) {
+        /*
         Departure departure0 = new Departure(1963, Month.NOVEMBER, 22, 12, 30);
         Departure departure1 = new Departure(1966, Month.APRIL, 11, 2, 15);
         Departure departure2 = new Departure(1969, Month.JANUARY, 1, 3, 30);
@@ -153,5 +225,11 @@ public class CourierSchedule {
 
         courier2.printCourierName();
         courier2.printSchedule();
+        */
+
+        CourierSchedule courierSchedule0 = new CourierSchedule();
+        courierSchedule0.generateRandomSchedule(10, 2014, 2016, 1, 12, 1, 27, 0, 23, 0, 60);
+        courierSchedule0.printCourierName();
+        courierSchedule0.printSchedule();
     }
 }
