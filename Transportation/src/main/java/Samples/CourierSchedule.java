@@ -183,7 +183,6 @@ public class CourierSchedule {
             randSchedule.add(new Departure(randYear, randMonth, randDay, randHour, randMinute));
         }
 
-        setCourierName("Default_name");
         setSchedule(randSchedule);
     }
 
@@ -191,68 +190,42 @@ public class CourierSchedule {
         HashSet<Departure> departures = new HashSet<>();
 
         for (Departure dep : schedule) {
-            System.out.println();
-            System.out.println("Departure that is searching:\n" + findDeparture);
-            System.out.println("Departure that is verifying:\n" + dep);
-            System.out.println();
 
             if (dep.getYear() < findDeparture.getYear()) {
-                System.out.println("Year is NOT OK! Verifying year is lesser than checking year.");
                 continue;
             } else if (dep.getYear() > findDeparture.getYear()) {
-                System.out.println("Year is OK! Verifying year is bigger than checking year. " +
-                        "Add verifying departure to the resulting set.");
                 departures.add(dep);
                 continue;
-            } else {
-                System.out.println("Year is OK! Verifying year matches checking year. Go forward to check month.");
             }
             if (dep.getMonthValue() < findDeparture.getMonthValue()) {
-                System.out.println("Month is NOT OK! Verifying month is lesser than checking month.");
                 continue;
             } else if (dep.getMonthValue() > findDeparture.getMonthValue()) {
-                System.out.println("Month is OK! Verifying month is bigger than checking month. " +
-                        "Add verifying departure to the resulting set.");
                 departures.add(dep);
                 continue;
-            } else {
-                System.out.println("Month is OK! Verifying month matches checking month. Go forward to check day.");
             }
             if (dep.getDayOfMonth() < findDeparture.getDayOfMonth()) {
-                System.out.println("Day is NOT OK! Verifying day is lesser than checking day.");
                 continue;
             } else if (dep.getDayOfMonth() > findDeparture.getDayOfMonth()) {
-                System.out.println("Day is OK! Verifying day is bigger than checking day. " +
-                        "Add verifying departure to the resulting set.");
                 departures.add(dep);
                 continue;
-            } else {
-                System.out.println("Month is OK! Verifying month matches checking month. Go forward to check hour.");
             }
             if (dep.getHour() < findDeparture.getHour()) {
-                System.out.println("Hour is NOT OK! Verifying hour is lesser than checking hour.");
                 continue;
             } else if (dep.getHour() > findDeparture.getHour()) {
-                System.out.println("Hour is OK! Verifying hour is bigger than checking hour. " +
-                        "Add verifying departure to the resulting set.");
                 departures.add(dep);
                 continue;
-            } else {
-                System.out.println("Hour is OK! Verifying hour matches checking hour. Go forward to check minute.");
             }
             if (dep.getMinute() >= findDeparture.getMinute()) {
-                System.out.println("Minute is OK! Verifying minute is bigger than checking minute. " +
-                        "Add verifying departure to the resulting set. Checking is DONE!");
                 departures.add(dep);
             }
         }
-        System.out.println();
+
         return departures;
     }
 
     public static void main(String[] args) {
         CourierSchedule courierSchedule0 = new CourierSchedule();
-        //courierSchedule0.generateRandomSchedule(10, 2014, 2016, 1, 12, 1, 27, 0, 23, 0, 59);
+        courierSchedule0.setCourierName("courierSchedule0");
 
         Departure departure0 = new Departure(2014, Month.NOVEMBER, 22, 12, 30);
         Departure departure1 = new Departure(2014, Month.APRIL, 11, 2, 15);
@@ -265,6 +238,7 @@ public class CourierSchedule {
         Departure departure8 = new Departure(2016, Month.JUNE, 6, 16, 30);
 
         Departure checkDeparture = new Departure(2015, Month.JANUARY, 1, 0, 0);
+        Departure checkEmptyDeparture = new Departure(2018, Month.JANUARY, 1, 0, 0);
 
         courierSchedule0.addDeparture(departure0);
         courierSchedule0.addDeparture(departure1);
@@ -280,6 +254,46 @@ public class CourierSchedule {
         courierSchedule0.printSchedule();
 
         System.out.println("Departures after: \n" + checkDeparture);
-        System.out.println("Found departures: \n" + courierSchedule0.findDepartureInSchedule(checkDeparture));
+
+
+        CourierSchedule courierSchedule1 = new CourierSchedule();
+        courierSchedule1.setCourierName("courierSchedule1");
+        courierSchedule1.generateRandomSchedule(20, 2014, 2016, 1, 12, 1, 27, 0, 23, 0, 59);
+        CourierSchedule courierSchedule2 = new CourierSchedule();
+        courierSchedule2.setCourierName("courierSchedule2");
+        courierSchedule2.generateRandomSchedule(30, 2013, 2017, 1, 12, 1, 27, 0, 23, 0, 59);
+        CourierSchedule courierSchedule3 = new CourierSchedule();
+        courierSchedule3.setCourierName("courierSchedule3");
+        courierSchedule3.generateRandomSchedule(30, 2010, 2014, 1, 12, 1, 27, 0, 23, 0, 59);
+
+        HashSet<Departure> checkSet0 = courierSchedule0.findDepartureInSchedule(checkDeparture);
+        HashSet<Departure> checkSet1 = courierSchedule1.findDepartureInSchedule(checkDeparture);
+        HashSet<Departure> checkSet2 = courierSchedule2.findDepartureInSchedule(checkDeparture);
+        HashSet<Departure> checkSet3 = courierSchedule3.findDepartureInSchedule(checkDeparture);
+
+        if (!checkSet0.isEmpty()) {
+            System.out.println("Found departures for courier: " + courierSchedule0.getCourierName() + "\n" + checkSet0);
+        }  else {
+            System.out.println("courierSchedule0 empty.");
+            courierSchedule0.printSchedule();
+        }
+        if (!checkSet1.isEmpty()) {
+            System.out.println("Found departures for courier: " + courierSchedule1.getCourierName() + "\n" + checkSet1);
+        } else {
+            System.out.println("courierSchedule1 empty.");
+            courierSchedule1.printSchedule();
+        }
+        if (!checkSet2.isEmpty()) {
+            System.out.println("Found departures for courier: " + courierSchedule2.getCourierName() + "\n" + checkSet2);
+        } else {
+            System.out.println("courierSchedule2 empty.");
+            courierSchedule2.printSchedule();
+        }
+        if (!checkSet3.isEmpty()) {
+            System.out.println("Found departures for courier: " + courierSchedule3.getCourierName() + "\n" + checkSet3);
+        } else {
+            System.out.println("courierSchedule3 empty.");
+            courierSchedule3.printSchedule();
+        }
     }
 }
