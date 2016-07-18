@@ -19,7 +19,7 @@ public class TryFileIO {
 
         try {
             fileContent = new String (Files.readAllBytes(Paths.get(path)));
-            System.out.println("Read file content into string:\n" + fileContent);
+            //System.out.println("Read file content into string:\n" + fileContent);
         } catch (IOException e) {
             System.err.println("An I/O exception");
             e.printStackTrace();

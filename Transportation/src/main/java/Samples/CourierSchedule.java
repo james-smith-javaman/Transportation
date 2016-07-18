@@ -1,5 +1,8 @@
 package Samples;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.time.Month;
 import java.util.HashSet;
 import java.util.Random;
@@ -102,7 +105,7 @@ public class CourierSchedule {
      */
     @Override
     public String toString() {
-        String fullSchedule = null;
+        String fullSchedule = "";
         for (Departure dep: schedule) {
             fullSchedule += dep.toString();
         }
@@ -250,10 +253,7 @@ public class CourierSchedule {
         courierSchedule0.addDeparture(departure7);
         courierSchedule0.addDeparture(departure8);
 
-        courierSchedule0.printCourierName();
-        courierSchedule0.printSchedule();
-
-        System.out.println("Departures after: \n" + checkDeparture);
+        //System.out.println("Departures after: \n" + checkDeparture);
 
 
         CourierSchedule courierSchedule1 = new CourierSchedule();
@@ -270,7 +270,7 @@ public class CourierSchedule {
         HashSet<Departure> checkSet1 = courierSchedule1.findDepartureInSchedule(checkDeparture);
         HashSet<Departure> checkSet2 = courierSchedule2.findDepartureInSchedule(checkDeparture);
         HashSet<Departure> checkSet3 = courierSchedule3.findDepartureInSchedule(checkDeparture);
-
+        /*
         if (!checkSet0.isEmpty()) {
             System.out.println("Found departures for courier: " + courierSchedule0.getCourierName() + "\n" + checkSet0);
         }  else {
@@ -295,5 +295,23 @@ public class CourierSchedule {
             System.out.println("courierSchedule3 empty.");
             courierSchedule3.printSchedule();
         }
+        */
+
+        Gson gsonDeparture = new GsonBuilder().setPrettyPrinting().create();
+        //Gson gsonDeparture = new Gson();
+        //System.out.println("Object: " + departure0);
+        //System.out.println("Formatted JSON:\n" + gsonDeparture.toJson(departure0));
+
+        /*Gson gsonCourierSchedule = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println("Object: " + courierSchedule0);
+        System.out.println("Formatted JSON:\n" + gsonCourierSchedule.toJson(courierSchedule0));*/
+
+        String jsonString = "{\"dateTime\":{\"date\":{\"year\":2014,\"month\":11,\"day\":22},\"time\":{\"hour\":12,\"minute\":30,\"second\":0,\"nano\":0}}}";
+        String departureFromFile = TryFileIO.getFileContent("files/testDepartureObjectJSON.json");
+
+        System.out.println("File content:\n" + departureFromFile);
+
+        Departure departureFromJSON = gsonDeparture.fromJson(departureFromFile, Departure.class);
+        System.out.println("Departure object created from JSON string: " + departureFromJSON);
     }
 }
