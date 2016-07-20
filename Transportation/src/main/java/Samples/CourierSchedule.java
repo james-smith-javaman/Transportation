@@ -297,21 +297,9 @@ public class CourierSchedule {
         }
         */
 
-        Gson gsonDeparture = new GsonBuilder().setPrettyPrinting().create();
+        Gson gsonSchedule = new GsonBuilder().setPrettyPrinting().create();
         //Gson gsonDeparture = new Gson();
-        //System.out.println("Object: " + departure0);
-        //System.out.println("Formatted JSON:\n" + gsonDeparture.toJson(departure0));
 
-        /*Gson gsonCourierSchedule = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println("Object: " + courierSchedule0);
-        System.out.println("Formatted JSON:\n" + gsonCourierSchedule.toJson(courierSchedule0));*/
-
-        String jsonString = "{\"dateTime\":{\"date\":{\"year\":2014,\"month\":11,\"day\":22},\"time\":{\"hour\":12,\"minute\":30,\"second\":0,\"nano\":0}}}";
-        String departureFromFile = TryFileIO.getFileContent("files/testDepartureObjectJSON.json");
-
-        System.out.println("File content:\n" + departureFromFile);
-
-        Departure departureFromJSON = gsonDeparture.fromJson(departureFromFile, Departure.class);
-        System.out.println("Departure object created from JSON string: " + departureFromJSON);
+        CourierSchedule fromJSONFile = gsonSchedule.fromJson(TryFileIO.getFileContent(""), CourierSchedule.class);
     }
 }
