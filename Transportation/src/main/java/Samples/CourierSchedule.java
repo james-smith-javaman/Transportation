@@ -297,9 +297,12 @@ public class CourierSchedule {
         }
         */
 
+
+
         Gson gsonSchedule = new GsonBuilder().setPrettyPrinting().create();
         //Gson gsonDeparture = new Gson();
+        System.out.println(gsonSchedule.toJson(courierSchedule3));
 
-        CourierSchedule fromJSONFile = gsonSchedule.fromJson(TryFileIO.getFileContent(""), CourierSchedule.class);
+        //CourierSchedule fromJSONFile = gsonSchedule.fromJson(TryFileIO.getFileContent(""), CourierSchedule.class);
     }
 }
