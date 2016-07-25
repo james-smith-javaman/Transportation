@@ -2,6 +2,7 @@ package Samples;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.codehaus.groovy.antlr.treewalker.SourceCodeTraversal;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -185,6 +186,10 @@ public class CourierSystem {
 
     public static void main(String[] args) {
         List<String> pathsList = readPaths();
+        if (pathsList.isEmpty()) {
+            System.out.println("Nothing to process. No path has been entered.\nQuiting...");
+            System.exit(-1);
+        }
         System.out.println("Paths:\n" + pathsList);
         List<CourierSchedule> courierScheduleList = getCourierScheduleObjectsFromJSON(pathsList);
         //Departure checkDeparture = new Departure(2015, Month.JANUARY, 1, 0, 0);
