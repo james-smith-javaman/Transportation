@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * This class is designed for handling interaction with user via console.
  *
- * Created by tarasmotyl on 7/20/16.
+ * Created by james.smith on 7/20/16.
  */
 public class CourierSystem {
 
@@ -190,9 +190,9 @@ public class CourierSystem {
             System.out.println("Nothing to process. No path has been entered.\nQuiting...");
             System.exit(-1);
         }
-        System.out.println("Paths:\n" + pathsList);
         List<CourierSchedule> courierScheduleList = getCourierScheduleObjectsFromJSON(pathsList);
         //Departure checkDeparture = new Departure(2015, Month.JANUARY, 1, 0, 0);
+        System.out.println("To find feature departures please fill in next information:\n");
         Departure checkDeparture = createCheckerDeparture();
         System.out.println("Searching for departures after:\n" + checkDeparture);
 
