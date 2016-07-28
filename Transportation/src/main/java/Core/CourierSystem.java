@@ -1,8 +1,7 @@
-package Samples;
+package Core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.codehaus.groovy.antlr.treewalker.SourceCodeTraversal;
 
 import java.io.IOException;
 import java.nio.file.Files;

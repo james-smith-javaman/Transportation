@@ -1,5 +1,6 @@
-package Samples;
+package Core;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.TextStyle;
@@ -11,7 +12,7 @@ import java.util.Locale;
  * date and time values for a specific currier.
  * Created by james.smith on 7/12/16.
  */
-public class Departure {
+public class Departure implements Serializable {
 
     LocalDateTime dateTime;
 
