@@ -183,6 +183,16 @@ public class CourierSystem {
         return objectsFromJSON;
     }
 
+    /**
+     * Creates CourierSchedule object from JSON represented by a String object.
+     * @param jsonString - Json represented by a String object.
+     * @return - CourierSchedule object.
+     */
+    public static CourierSchedule getCourierScheduleObjectsFromJSON(String jsonString) {
+        Gson gsonSchedule = new GsonBuilder().setPrettyPrinting().create();
+        return gsonSchedule.fromJson(getFileContent(jsonString), CourierSchedule.class);
+    }
+
     public static void main(String[] args) {
         List<String> pathsList = readPaths();
         if (pathsList.isEmpty()) {

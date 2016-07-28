@@ -85,11 +85,11 @@ public class Client {
                 objectOut.writeInt(999);
                 objectOut.flush();
 
-                String request = TryFileIO.getFileContent("/Users/tarasmotyl/Desktop/king.txt");
+                /*String request = TryFileIO.getFileContent("/Users/tarasmotyl/Desktop/king.txt");
                 System.out.println("Message length: " + request.length());
 
                 out.write(request.getBytes());
-                out.flush();
+                out.flush();*/
                 System.out.println("Flushed out.");
 
 
