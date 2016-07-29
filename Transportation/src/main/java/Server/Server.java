@@ -1,11 +1,16 @@
 package Server;
 
 import Core.CommonClientServer;
+import Core.CourierSchedule;
+import Core.CourierSystem;
 import Core.Departure;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * This class represents server side of the "client-server" application.
@@ -24,25 +29,52 @@ public class Server {
             try (Socket socket = serverSocket.accept()) {
                 System.out.println("Received a connection from: " + socket.getRemoteSocketAddress());
 
-                try (InputStream in = socket.getInputStream();
-                     OutputStream out = socket.getOutputStream();
-                     ObjectOutputStream objectOut = new ObjectOutputStream(out);
-                     ObjectInputStream objectIn = new ObjectInputStream(in)) {
+                try (ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+                     ObjectInputStream objectIn = new ObjectInputStream(socket.getInputStream())) {
 
-                    System.out.println(objectIn.readInt());
+                    int size = objectIn.readInt();
+                    System.out.println("size: " + size);
+                    List<String> filesList = new ArrayList<>();
+                    List<CourierSchedule> courierSchedulesList = new ArrayList<>();
+                    List<String> responseList = new ArrayList<>();
 
-                    //System.out.println(dataIn.readInt());
+                    for (int i = 0; i != size; ++i) {
+                        filesList.add((String)objectIn.readObject());
+                    }
 
+                    System.out.println("Received list of strings:");
+                    System.out.println("List size: " + filesList.size());
+                    for (String str: filesList) {
+                        System.out.println("Length: " + str.length());
+                    }
 
-                    Departure receivedObject = (Departure) objectIn.readObject();
-                    System.out.println("Received object: " + receivedObject);
+                    Departure receivedDepartureObject = (Departure) objectIn.readObject();
+                    System.out.println("Received object: " + receivedDepartureObject);
 
-                    System.out.println(objectIn.readInt());
+                    for (String str: filesList) {
+                        courierSchedulesList.add(CourierSystem.getCourierScheduleObjectFromJSON(str));
+                    }
 
+                    for (CourierSchedule courierSchedule: courierSchedulesList) {
+                        HashSet<Departure> checkSet0 = courierSchedule.findDepartureInSchedule(receivedDepartureObject);
+                        if (!checkSet0.isEmpty()) {
+                            responseList.add("Found departures for courier: " + courierSchedule.getCourierName() + "\n"
+                                    + checkSet0);
+                            //System.out.println("Found departures for courier: " + courierSchedule.getCourierName() + "\n" + checkSet0);
+                        } else {
+                            responseList.add("No available departures for courier: " + courierSchedule.getCourierName());
+                            //System.out.println("No available departures for courier: " + courierSchedule.getCourierName());
+                        }
+                    }
 
-                    String message = CommonClientServer.receiveMessage(in);
-                    System.out.println("Message:\n" + message);
-                    System.out.println("Message length: " + message.length());
+                    objectOut.writeInt(responseList.size());
+                    objectOut.flush();
+
+                    for (String response: responseList) {
+                        objectOut.writeObject(response);
+                        objectOut.flush();
+                    }
+
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }

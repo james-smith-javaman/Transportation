@@ -188,9 +188,9 @@ public class CourierSystem {
      * @param jsonString - Json represented by a String object.
      * @return - CourierSchedule object.
      */
-    public static CourierSchedule getCourierScheduleObjectsFromJSON(String jsonString) {
+    public static CourierSchedule getCourierScheduleObjectFromJSON(String jsonString) {
         Gson gsonSchedule = new GsonBuilder().setPrettyPrinting().create();
-        return gsonSchedule.fromJson(getFileContent(jsonString), CourierSchedule.class);
+        return gsonSchedule.fromJson(jsonString, CourierSchedule.class);
     }
 
     public static void main(String[] args) {
@@ -200,9 +200,9 @@ public class CourierSystem {
             System.exit(-1);
         }
         List<CourierSchedule> courierScheduleList = getCourierScheduleObjectsFromJSON(pathsList);
-        //Departure checkDeparture = new Departure(2015, Month.JANUARY, 1, 0, 0);
-        System.out.println("To find feature departures please fill in next information:\n");
-        Departure checkDeparture = createCheckerDeparture();
+        Departure checkDeparture = new Departure(2015, Month.JANUARY, 1, 0, 0);
+        //System.out.println("To find feature departures please fill in next information:\n");
+        //Departure checkDeparture = createCheckerDeparture();
         System.out.println("Searching for departures after:\n" + checkDeparture);
 
         for (CourierSchedule courierSchedule: courierScheduleList) {

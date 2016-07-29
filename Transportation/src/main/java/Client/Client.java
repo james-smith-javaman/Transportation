@@ -64,19 +64,11 @@ public class Client {
         try (Socket socket = new Socket(ipAddress, port)) {
             System.out.println("Connected to: " + socket.getRemoteSocketAddress());
 
-            try (InputStream in = socket.getInputStream();
-                 OutputStream out = socket.getOutputStream();
-                 ObjectOutputStream objectOut = new ObjectOutputStream(out);
-                 ObjectInputStream objectIn = new ObjectInputStream(in)) {
+            try (ObjectOutputStream objectOut = new ObjectOutputStream(socket.getOutputStream());
+                 ObjectInputStream objectIn = new ObjectInputStream(socket.getInputStream())) {
 
-
-
+                /*objectOut.writeInt(999);
                 objectOut.flush();
-                objectOut.writeInt(999);
-                objectOut.flush();
-
-                /*dataOut.writeInt(777);
-                dataOut.flush();*/
 
                 Departure checkDeparture = new Departure(2015, Month.JANUARY, 1, 0, 0);
                 objectOut.writeObject(checkDeparture);
@@ -90,22 +82,42 @@ public class Client {
 
                 out.write(request.getBytes());
                 out.flush();*/
-                System.out.println("Flushed out.");
 
+                List<String> pathsList = CourierSystem.readPaths();
+                List<String> filesContent = new ArrayList<>();
 
-
-                /*System.out.println("Sending list of strings");
-                for (String message: stringList) {
-                    System.out.println("Message: " + message);
-                    System.out.println("Length: " + message.length());
-                    out.write(message.getBytes());
-                    out.flush();
+                for (String path: pathsList) {
+                    filesContent.add(CourierSystem.getFileContent(path));
                 }
 
+                objectOut.writeInt(filesContent.size());
+                objectOut.flush();
+
+                System.out.println("Sending list of strings");
+                for (String message: filesContent) {
+                    System.out.println("Length: " + message.length());
+                    objectOut.writeObject(message);
+                    objectOut.flush();
+                }
+
+                Departure checkDeparture = new Departure(2015, Month.JANUARY, 1, 0, 0);
+                System.out.println("Sending checker Departure object: " + checkDeparture);
+                objectOut.writeObject(checkDeparture);
+                objectOut.flush();
+
+                int responseSize = objectIn.readInt();
+
+                for (int i = 0; i != responseSize; ++i) {
+                    System.out.println((String)objectIn.readObject());
+                }
+
+                CourierSystem.closeScanner();
 
 
-                String response = CommonClientServer.receiveMessage(in);
+                /*String response = CommonClientServer.receiveMessage(in);
                 System.out.println("Server response:\n" + response);*/
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
 
         } catch (IOException e) {
