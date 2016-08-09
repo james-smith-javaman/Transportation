@@ -23,28 +23,6 @@ public class Client {
 
     public static void main(String[] args) {
 
-        /*
-        Scanner reader = new Scanner(System.in);
-
-        System.out.print("Enter IP Address of the server: ");
-        String ipAddress = reader.nextLine();
-
-        System.out.print("Enter port of the server: ");
-        int port = reader.nextInt();
-        */
-
-        /*
-        List<String> pathsList = CourierSystem.readPaths();
-        if (pathsList.isEmpty()) {
-            System.out.println("Nothing to process. No path has been entered.\nQuiting...");
-            System.exit(-1);
-        }
-        List<CourierSchedule> courierScheduleList = CourierSystem.getCourierScheduleObjectsFromJSON(pathsList);
-        Departure checkDeparture = new Departure(2015, Month.JANUARY, 1, 0, 0);
-        //System.out.println("To find feature departures please fill in next information:\n");
-        //Departure checkDeparture = CourierSystem.createCheckerDeparture();
-        */
-
         List<String> stringList = new ArrayList<>();
         stringList.add("First string");
         stringList.add("Second string");
